@@ -11,6 +11,15 @@
 
 .blocks > * {
   border: 1px solid green;
-  height: 250px;
+  height: 350px;
   font-size: 50px;
+}
+
+.block-3 {
+  transform: translateX(-110%);
+  transition: all 3s;
+}
+
+.block-3_active {
+  transform: translateX(0);
 }

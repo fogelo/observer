@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <div class="img imgA"></div>
+      </div>
+      <div class="wrapper">
+        <div class="img imgB"></div>
+      </div>
+      <div class="wrapper">
+        <div class="img imgC"></div>
+      </div>
+      <div class="wrapper">
+        <div class="img imgD"></div>
+      </div>
+    </div>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      .container {
+        width: 100%;
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-top: 32rem;
+      }
+      .wrapper {
+        position: relative;
+        margin-bottom: 5px;
+        height: 400px;
+      }
+
+      .img {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        transition: all 1s;
+      }
+
+      .imgA {
+        width: 150px;
+        height: 150px;
+        background-color: aquamarine;
+        display: inline-block;
+      }
+      .imgB {
+        width: 200px;
+        height: 200px;
+        background-color: aquamarine;
+        display: inline-block;
+      }
+      .imgC {
+        width: 250px;
+        height: 250px;
+        background-color: aquamarine;
+        display: inline-block;
+      }
+      .imgD {
+        width: 300px;
+        height: 300px;
+        background-color: aquamarine;
+        display: inline-block;
+
+        transform: translateX(-150%);
+      }
+      .fadeInLeft {
+        transform: translateX(0px);
+      }
+
+      .fadeInRight {
+        transform: translateX(0px);
+      }
+
+      .fadeInBtm {
+        transform: translateY(0px);
+      }
+
+      .zoomIn {
+        /* transform: scale(1);*/
+        transform: translateX(0px); 
+      }
+    </style>
+
+    <script>
+      const container = document.querySelector(".container");
+      const wrappers = document.querySelectorAll(".wrapper");
+      const imgs = document.querySelectorAll(".img");
+      const animClasses = ["fadeInLeft", "fadeInRight", "fadeInBtm", "zoomIn"];
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            const currentIndex = Array.from(wrappers).indexOf(entry.target);
+            if (entry.isIntersecting) {
+              imgs[currentIndex].classList.add(animClasses[currentIndex]);
+            } else {
+              if (entry.boundingClientRect.y > 0) {
+                imgs[currentIndex].classList.remove(animClasses[currentIndex]);
+              }
+            }
+          });
+        },
+        {
+          root: container,
+          threshold: 0.1,
+        }
+      );
+
+      wrappers.forEach((wrapper) => {
+        observer.observe(wrapper);
+      });
+    </script>
+  </body>
+</html>
